@@ -377,9 +377,7 @@ func (g *Galleries) galleryByID(w http.ResponseWriter, r *http.Request) (*models
 		case models.ErrNotFound:
 			// http.Error(w, "Gallery not found.", http.StatusNotFound)
 			// #
-			var vd views.Data
-			vd.AlertError("Invalid gallery ID entered.")
-			views.RedirectAlert(w, r, "/galleries", http.StatusFound, *vd.Alert)
+			http.Redirect(w, r, "/galleries", http.StatusFound)
 		default:
 			log.Print(err)
 			http.Error(w, "Whoops. Something went wrong!", http.StatusInternalServerError)
