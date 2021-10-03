@@ -1,0 +1,30 @@
+{{define "yield"}}
+  <div class="row">
+    <!-- referenced from https://getbootstrap.com/docs/4.0/layout/grid/ -->
+    <div class="col-md-6 col-md-offset-3">
+      <!-- referenced from https://getbootstrap.com/docs/3.3/components/#panels -->
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Create a Gallery</h3>
+        </div>
+        <div class="panel-body">
+          {{template "galleryForm"}}
+        </div>
+      </div>
+    </div>
+  </div>
+{{end}}
+
+{{define "galleryForm"}}
+<form action="/galleries" method="POST">
+  {{csrfField}}
+  <div class="form-group">
+    <label for="title">Title</label>
+    <!-- name (name is the key) that is mapped to the schema of the signup form -->
+    <!-- "name" = "whatever_the_name_may_be" -->
+    <input type="text" name="title" class="form-control" id="title" placeholder="What is the title of your gallery">
+  </div>
+      <!-- go to bootswatch.com to get the right colours for the buton -->
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{{end}}

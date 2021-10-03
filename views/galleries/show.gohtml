@@ -1,0 +1,27 @@
+{{define "yield"}}
+  <div class="row">
+    <!-- referenced from https://getbootstrap.com/docs/4.0/layout/grid/ -->
+    <div class="col-md-12">
+      <h1>{{.Title}}</h1>
+      <hr>
+    </div>
+    <div class="row">
+        {{range .ImageSplitN 3}}
+          <div class="col-md-4">
+            {{range .}}
+              <a href="{{.Path}}">
+                <img src="{{.Path}}" class="thumbnail">
+              </a>
+            {{end}}
+          </div>
+        {{end}}
+    </div>
+  </div>
+{{end}}
+
+
+{{/* {{range .Images}}
+          <div class="col-md-4">
+            <img src="{{.}}" class="thumbnail">
+          </div>
+        {{end}} */}}

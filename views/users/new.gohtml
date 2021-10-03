@@ -1,0 +1,49 @@
+{{define "yield"}}
+<h1>{{.}}</h1>
+  <div class="row">
+    <!-- referenced from https://getbootstrap.com/docs/4.0/layout/grid/ -->
+    <div class="col-md-4 col-md-offset-4">
+      <!-- referenced from https://getbootstrap.com/docs/3.3/components/#panels -->
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Signup here!!</h3>
+        </div>
+        <div class="panel-body">
+          {{template "signupForm"}}
+        </div>
+      </div>
+    </div>
+  </div>
+{{end}}
+
+{{define "signupForm"}}
+<form action="/signup" method="POST">
+  {{csrfField}}
+  <div class="form-group">
+    <label for="name">Name</label>
+    <!-- name (name is the key) that is mapped to the schema of the signup form -->
+    <!-- "name" = "whatever_the_name_may_be" -->
+    <input type="text" name="name" class="form-control" id="name" placeholder="Your full name">
+  </div>
+  <div class="form-group">
+    <label for="email">Email address</label>
+    <!-- name (name is the key) that is mapped to the schema of the signup form -->
+    <!-- "email" = "whatever_the_email_may_be@gmail.com" -->
+    <input type="email" name="email" class="form-control" id="email" placeholder="Email">
+  </div>
+  <div class="form-group">
+    <label for="age">Age</label>
+    <!-- name (name is the key) that is mapped to the schema of the signup form -->
+    <!-- "age" : "whatever_the_age_may_be" -->
+    <input type="text" name="age" class="form-control" id="age" placeholder="Age">
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <!-- name (name is the key) that is mapped to the schema of the signup form -->
+    <!-- "password" : "whatever_the_password_may_be" -->
+    <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+  </div>
+      <!-- go to bootswatch.com to get the right colours for the buton -->
+  <button type="submit" class="btn btn-primary">Sign Up</button>
+</form>
+{{end}}

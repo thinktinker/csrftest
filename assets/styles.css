@@ -1,0 +1,15 @@
+/* Lenslocked.com styles */
+
+.thumbnail {
+    width: 50%;
+    margin-bottom: 6px;
+}
+
+footer {
+    padding-top: 60px;
+}
+
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+  }

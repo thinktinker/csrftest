@@ -1,0 +1,111 @@
+{{define "yield"}}
+  <div class="row">
+    <!-- referenced from https://getbootstrap.com/docs/4.0/layout/grid/ -->
+    <div class="col-md-10 col-md-offset-1">
+      <h2>Edit your gallery</h2>
+      <a href="/galleries/{{.ID}}">View this gallery</a>
+      <hr>
+    </div>
+    <div class="col-md-12">
+      {{template "editGalleryForm" .}}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-1">
+      <label class="control-label pull-right">Images</label>
+    </div>
+    <div class="col-md-10">
+      {{template "galleryImages" .}}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      {{template "uploadImageForm" .}}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <h3>Dangerous buttons...</h3>
+      <hr>
+    </div>
+    <div class="col-md-12">
+      {{template "deleteGalleryForm" .}}
+    </div>
+  </div>
+{{end}}
+
+{{define "editGalleryForm"}}
+  <form action="/galleries/{{.ID}}/update" method="POST" class="form-horizontal">
+    {{csrfField}}
+    <div class="form-group">
+      <label for="title" class="col-md-1 control-label">Title</label>
+      <div class="col-md-10">
+        <!-- name (name is the key) that is mapped to the schema of the signup form -->
+        <!-- "name" = "whatever_the_name_may_be" -->
+        <input type="text" name="title" class="form-control" id="title" placeholder="What is the title of your gallery" value="{{.Title}}">
+      </div>
+      <div class="col-md-1">
+        <!-- go to bootswatch.com to get the right colours for the buton -->
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </form>
+{{end}}
+
+{{define "deleteGalleryForm"}}
+    <form action="/galleries/{{.ID}}/delete" method="POST" class="form-horizontal">
+      {{csrfField}}
+      <div class="form-group">
+          <div class="col-md-10 col-md-offset-1">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </div>
+      </div>
+    </form>
+{{end}}
+
+
+{{define "uploadImageForm"}}
+  <form action="/galleries/{{.ID}}/images" method="POST" enctype="multipart/form-data" class="form-horizontal">
+    {{csrfField}}
+    <div class="form-group">
+      <label for="images" class="col-md-1 control-label">Upload new images</label>
+      <div class="col-md-10">
+        <input type="file"  multiple="multiple" id="images" name="images">
+        <p class="help-block">Please only use jpg, jpeg and png.</p>
+        <button type="submit" class="btn btn-primary">Upload</button>
+      </div>
+    </div>
+  </form>    
+{{end}}
+
+{{define "galleryImages"}}
+  {{range .ImageSplitN 6}}
+    <div class="col-md-2">
+      {{range .}}
+        <a href="{{.Path}}">
+          <img src="{{.Path}}" class="thumbnail">
+        </a>
+        {{template "deleteImageForm" .}}
+      {{end}}
+    </div>
+  {{end}}
+{{end}}
+
+{{/* 
+  <ul>
+    {{range .Images}}
+      <li><>{{.}}</li>
+    {{end}}
+  </ul>
+ */}}
+
+
+{{define "deleteImageForm"}}
+    <form action="/galleries/{{.GalleryID}}/images/{{.Filename | urlquery}}/delete" method="POST"> 
+    {{csrfField}}
+    <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+{{end}}
