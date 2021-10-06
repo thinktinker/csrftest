@@ -99,11 +99,7 @@ func (g *Galleries) Edit(w http.ResponseWriter, r *http.Request) {
 	// the gallery's userID
 	user := context.User(r.Context())
 	if gallery.UserID != user.ID {
-		// http.Error(w, "Gallery not found", http.StatusNotFound)
-		// #
-		var vd views.Data
-		vd.AlertError("Invalid gallery ID entered.")
-		views.RedirectAlert(w, r, "/galleries", http.StatusFound, *vd.Alert)
+		http.Error(w, "Gallery not found", http.StatusNotFound)
 		return
 	}
 
@@ -375,9 +371,7 @@ func (g *Galleries) galleryByID(w http.ResponseWriter, r *http.Request) (*models
 	if err != nil {
 		switch err {
 		case models.ErrNotFound:
-			// http.Error(w, "Gallery not found.", http.StatusNotFound)
-			// #
-			http.Redirect(w, r, "/galleries", http.StatusFound)
+			http.Error(w, "Gallery not found.", http.StatusNotFound)
 		default:
 			log.Print(err)
 			http.Error(w, "Whoops. Something went wrong!", http.StatusInternalServerError)
